@@ -1,8 +1,9 @@
 import fastify from 'fastify'
+import { parsedEnv } from '../env'
 import crypto from 'node:crypto'
 import { knex } from '../database'
 
-const server = fastify()
+export const server = fastify()
 
 server.get('/transactions', async () => {
   const transactions = await knex('transactions').select('*')
@@ -23,8 +24,8 @@ server.post('/transactions', async () => {
 
 server
   .listen({
-    port: 3333,
+    port: parsedEnv.PORT,
   })
   .then(() => {
-    console.log('HTTP Server running on port 3333 ⊱🚀')
+    console.log(`HTTP Server running on port ${parsedEnv.PORT} ⊱🚀`)
   })
